@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
+    <link rel="stylesheet" href="/assets/css/zeroing.css">
+    <script src="/assets/js/addScripts.js"></script>
+    <title>Телефонный справочник</title>
+</head>
+
+<body>
+<a href="/">Вернуться к телефонному справочнику</a>
+<form onsubmit="return printToConsole();">
+    <input type="submit">
+    <div>
+        <input class="name" autocomplete="off" autofocus placeholder="Фамилия" type="text" name="lastName">
+        <input class="name" autocomplete="off" autofocus placeholder="Имя" type="text" name="firstName">
+        <input class="name" autocomplete="off" autofocus placeholder="Отчество" type="text" name="patronymic">
+        <input autocomplete="off" autofocus placeholder="Организация" type="text" name="organization">
+        <input autocomplete="off" autofocus placeholder="Телефон" type="tel" name="number">
+    </div>
+</form>
+<h2>Похожие контакты:</h2>
+<table>
+</table>
+</body>
+
+</html>
+
