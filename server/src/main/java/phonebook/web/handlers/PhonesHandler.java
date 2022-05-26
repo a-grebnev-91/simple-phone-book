@@ -9,6 +9,7 @@ import phonebook.managers.PhoneBookManager;
 import phonebook.util.PropertiesLoader;
 import phonebook.util.json.PersonTypeAdapter;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -33,8 +34,14 @@ public class PhonesHandler implements HttpHandler {
             }
         } else if (exchange.getRequestMethod().equals("POST")) {
             //TODO not implemented
-
-            exchange.sendResponseHeaders(204, 0);
+            //if add send phones/added if not send phones/notAdded
+            FileInputStream is = new FileInputStream(PropertiesLoader.getProperty("/phones/added"));
+            byte[] html = is.readAllBytes();
+            is.close();
+            exchange.sendResponseHeaders(200, html.length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(html);
+            }
         } else {
             exchange.sendResponseHeaders(405, 0);
             exchange.close();

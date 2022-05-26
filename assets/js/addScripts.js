@@ -1,4 +1,4 @@
-const requestURL = '/phones'
+const phonesURL = '/phones'
 
 let inputs;
 let entriesFromServer
@@ -56,7 +56,7 @@ function getNames(event) {
 function loadData() {
     let xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    xhr.open('GET', requestURL);
+    xhr.open('GET', phonesURL);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             entriesFromServer = xhr.response;
@@ -65,7 +65,15 @@ function loadData() {
     xhr.send();
 }
 
-function printToConsole() {
-    console.log("kek");
-    return false;
+function tryToAddContact() {
+    //сюда добавить проверку на валидность (проверку по номеру наверное лучше отдать на сервер)
+    let pageContent = document.querySelector('html');
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', phonesURL);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            pageContent.innerHTML = xhr.response;
+        }
+    }
+    xhr.send();
 }

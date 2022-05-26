@@ -12,7 +12,7 @@
 
 <body>
 <a href="/">Вернуться к телефонному справочнику</a>
-<form onsubmit="return printToConsole();">
+<form onsubmit="tryToAddContact(); return false;">
     <input type="submit">
     <div>
         <input class="name" autocomplete="off" autofocus placeholder="Фамилия" type="text" name="lastName">
