@@ -40,4 +40,5 @@ hs_err_pid*
 # IntelliJ
 /out/
 
-/resources
+/server/src/main/resources
+
