@@ -1,7 +1,7 @@
 package phonebook.util;
 
-import phonebook.managers.FileBackedManager;
-import phonebook.managers.PhoneBookManager;
+import phonebook.model.managers.FileBackedManager;
+import phonebook.model.managers.PhoneBookManager;
 
 public class Managers {
 

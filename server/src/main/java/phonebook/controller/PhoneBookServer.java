@@ -1,11 +1,11 @@
-package phonebook.web;
+package phonebook.controller;
 
 import com.sun.net.httpserver.HttpServer;
-import phonebook.managers.PhoneBookManager;
+import phonebook.model.managers.PhoneBookManager;
 import phonebook.util.Managers;
-import phonebook.web.handlers.AssetsHandler;
-import phonebook.web.handlers.IndexHandler;
-import phonebook.web.handlers.PhonesHandler;
+import phonebook.controller.handlers.AssetsHandler;
+import phonebook.controller.handlers.IndexHandler;
+import phonebook.controller.handlers.PhonesHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

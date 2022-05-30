@@ -1,4 +1,4 @@
-package phonebook.data;
+package phonebook.model.data;
 
 import java.util.Collection;
 import java.util.HashMap;

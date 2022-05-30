@@ -1,13 +1,13 @@
 package phonebook;
 
-import phonebook.data.Person;
-import phonebook.managers.FileBackedManager;
-import phonebook.managers.PhoneBookManager;
-import phonebook.web.PhoneBookServer;
+import phonebook.model.data.Person;
+import phonebook.model.managers.FileBackedManager;
+import phonebook.model.managers.PhoneBookManager;
+import phonebook.controller.PhoneBookServer;
 
 import java.io.IOException;
 
-public class Main {
+public class PhoneBookApplication {
 
     public static void main(String[] args) throws IOException {
         new PhoneBookServer().start();

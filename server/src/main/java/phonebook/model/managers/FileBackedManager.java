@@ -1,7 +1,7 @@
-package phonebook.managers;
+package phonebook.model.managers;
 
-import phonebook.data.Person;
-import phonebook.data.PhoneBook;
+import phonebook.model.data.Person;
+import phonebook.model.data.PhoneBook;
 import phonebook.util.json.JsonFileLoader;
 import phonebook.util.json.JsonFileSaver;
 

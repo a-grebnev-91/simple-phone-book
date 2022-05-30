@@ -2,9 +2,9 @@ package phonebook.util.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import phonebook.data.Person;
-import phonebook.managers.FileBackedManager;
-import phonebook.managers.PhoneBookManager;
+import phonebook.model.data.Person;
+import phonebook.model.managers.FileBackedManager;
+import phonebook.model.managers.PhoneBookManager;
 import phonebook.util.PropertiesLoader;
 
 import java.io.FileInputStream;

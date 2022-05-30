@@ -5,7 +5,6 @@ let entriesFromServer
 let table;
 let tableHeader = '<tr><th>ФИО</th><th>Организация</th><th>Телефон</th></tr>';
 
-
 document.addEventListener("DOMContentLoaded", function(event) {
     inputs = document.querySelectorAll('.name');
     inputs.forEach(function(input, i, inputs){
@@ -14,6 +13,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
     table = document.querySelector('table');
     loadData();
 });
+
+//этот метод говнокод (сайд эфект)
+function convertStringToNumber(number) {
+    number = number.replace("+", "");
+    number = number.replaceAll("(", "");
+    number = number.replaceAll(")", "");
+    number = number.replaceAll("-", "");
+    if (number.length === 11 && number[0] == 7) {
+        number = number.replace("7", "");
+    }
+    console.log(number);
+    return /^\d+$/.test(number);
+}
 
 function getFullNameByUserInput() {
     let userInputFullName = '';
@@ -66,14 +78,37 @@ function loadData() {
 }
 
 function tryToAddContact() {
-    //сюда добавить проверку на валидность (проверку по номеру наверное лучше отдать на сервер)
+    let name = getFullNameByUserInput();
+    let organization = document.querySelector(".organization").value.trim();
+    let number = document.querySelector(".number").value.trim();
+    if (!name) {
+        alert("Нельзя создать безымянный контакт");
+        return;
+    }
+    if (!number) {
+        alert("Нельзя создать контакт без номера телефона");
+        return;
+    }
+    if (!convertStringToNumber(number)) {
+        alert("Номер содержит недопустимые символы");
+        return;
+    }
+    if (!organization) {
+        organization = "-";
+    }
+    let entry = {
+        name,
+        organization,
+        number
+    }
     let pageContent = document.querySelector('html');
     let xhr = new XMLHttpRequest();
     xhr.open('POST', phonesURL);
+    xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             pageContent.innerHTML = xhr.response;
         }
     }
-    xhr.send();
+    xhr.send(JSON.stringify(entry));
 }

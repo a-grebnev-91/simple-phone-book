@@ -3,7 +3,7 @@ package phonebook.util.json;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import phonebook.data.Person;
+import phonebook.model.data.Person;
 
 import java.io.IOException;
 

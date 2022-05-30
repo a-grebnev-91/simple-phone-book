@@ -1,4 +1,4 @@
-package phonebook.web.handlers;
+package phonebook.controller.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
