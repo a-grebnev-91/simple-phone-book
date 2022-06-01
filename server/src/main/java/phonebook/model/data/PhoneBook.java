@@ -6,15 +6,20 @@ import java.util.Map;
 
 public class PhoneBook {
     private final Map<Integer,Person> people;
+    private final Map<Long, Person> numbers;
 
     public PhoneBook() {
         people = new HashMap<>();
+        numbers = new HashMap<>();
     }
 
     public PhoneBook(Person[] people) {
         this();
-        for (Person p : people) {
-            this.people.put(p.getId(), p);
+        for (Person person : people) {
+            this.people.put(person.getId(), person);
+            for (Long number : person.getNumbers()) {
+                numbers.put(number, person);
+            }
         }
     }
 

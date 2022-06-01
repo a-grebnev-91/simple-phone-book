@@ -4,7 +4,6 @@ const requestURL = '/phones' //test url
 let input;
 let table;
 let tableHeader = '<tr><th>ФИО</th><th>Организация</th><th>Телефон</th></tr>';
-getNames();
 
 document.addEventListener("DOMContentLoaded", function(event) {
     input = document.querySelector('.name');
@@ -23,11 +22,12 @@ function getNames() {
             let values = xhr.response;
             let htmlForTable = tableHeader;
             for (let id in values) {
-                let name = values[id]['name'];
-                let organization = values[id]['organization'];
-                let number = values[id]['number'];
+                let entry = values[id];
+                let name = entry.name;
+                let organization = entry.organization;
+                let numbers = entry.numbers;
                 if (input === undefined || name.toLowerCase().includes(input.value.toLowerCase(), 0)) {
-                    htmlForTable += '<tr><td>' + name + '</td><td>' + organization + '</td><td>' + number + '</td></tr>';
+                    htmlForTable += '<tr><td>' + name + '</td><td>' + organization + '</td><td>' + numbers + '</td></tr>';
                 }
             }
             table.innerHTML = htmlForTable;

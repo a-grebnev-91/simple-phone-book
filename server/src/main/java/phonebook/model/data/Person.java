@@ -1,27 +1,31 @@
 package phonebook.model.data;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Person {
 
     private int id;
     private String name;
-    private PhoneNumber number;
+    private final Set<Long> numbers;
 
     private String organization;
 
-    public Person(String name, long number) {
+    public Person(String name, Long ... numbers) {
         this.name = name;
-        this.number = new PhoneNumber(number);
+        this.numbers = new HashSet<>();
+        this.numbers.addAll(Arrays.asList(numbers));
     }
 
-    public Person(String name, String organization, long number) {
-        this(name, number);
+    public Person(String name, String organization, Long ... numbers) {
+        this(name, numbers);
         this.organization = organization;
     }
 
-    public Person(int id, String name, String organization, long number) {
-        this(name, organization, number);
+    public Person(int id, String name, String organization, Long ... numbers) {
+        this(name, organization, numbers);
         this.id = id;
     }
 
@@ -33,8 +37,8 @@ public class Person {
         return name;
     }
 
-    public PhoneNumber getNumber() {
-        return number;
+    public Set<Long> getNumbers() {
+        return numbers;
     }
 
     public String getOrganization() {
@@ -49,8 +53,8 @@ public class Person {
         this.name = name;
     }
 
-    public void setNumber(PhoneNumber number) {
-        this.number = number;
+    public void addNumber(Long number) {
+        this.numbers.add(number);
     }
 
     public void setOrganization(String organization) {
@@ -62,11 +66,11 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return Objects.equals(number, person.number);
+        return Objects.equals(numbers, person.numbers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number);
+        return Objects.hash(numbers);
     }
 }

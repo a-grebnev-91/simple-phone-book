@@ -55,9 +55,8 @@ function getNames(event) {
     }
     for (let id in entriesFromServer) {
         let name = entriesFromServer[id]['name'];
-        console.log(name);
         let organization = entriesFromServer[id]['organization'];
-        let number = entriesFromServer[id]['number'];
+        let number = entriesFromServer[id]['numbers'];
         if (name.toLowerCase().includes(userInputFullName, 0)) {
             htmlForTable += '<tr><td>' + name + '</td><td>' + organization + '</td><td>' + number + '</td></tr>';
         }
