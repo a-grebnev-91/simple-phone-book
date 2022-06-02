@@ -22,13 +22,13 @@ function getPrettyNumbers(numbers) {
 function getTableContent(entries, userInput) {
     let htmlForTable = tableHeader;
     for (let id in entries) {
-        let entry = values[id];
+        let entry = entries[id];
         let name = entry.name;
         let organization = entry.organization;
         let numbers = entry.numbers;
         numbers = getPrettyNumbers(numbers);
         numbers = numbers.join("</br>");
-        if (name.toLowerCase().includes(userInput.value.toLowerCase(), 0)) {
+        if (name.toLowerCase().includes(userInput.toLowerCase(), 0)) {
             htmlForTable += '<tr><td>' + name + '</td><td>' + organization + '</td><td>' + numbers + '</td></tr>';
         }
     }

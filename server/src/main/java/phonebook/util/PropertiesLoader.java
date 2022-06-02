@@ -29,6 +29,10 @@ public class PropertiesLoader {
         return Charset.forName(properties.getProperty("defaultCharset"));
     }
 
+    public static int getPort() {
+        return Integer.parseInt(properties.getProperty("port"));
+    }
+
     public static String getProperty(String name) {
         return properties.getProperty(name);
     }

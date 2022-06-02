@@ -6,6 +6,7 @@ import phonebook.util.Managers;
 import phonebook.controller.handlers.AssetsHandler;
 import phonebook.controller.handlers.IndexHandler;
 import phonebook.controller.handlers.PhonesHandler;
+import phonebook.util.PropertiesLoader;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -16,10 +17,10 @@ public class PhoneBookServer {
     private PhoneBookManager manager;
 
     public PhoneBookServer() throws IOException {
-        this(8080);
+        this(PropertiesLoader.getPort());
     }
 
-    public PhoneBookServer(int port) throws IOException {
+    private PhoneBookServer(int port) throws IOException {
         this.port = port;
         server = HttpServer.create(new InetSocketAddress(port), 0);
         manager = Managers.getDefault();

@@ -18,5 +18,5 @@ public interface PhoneBookManager {
 
     Person getPersonBySurname(String secondName);
 
-
+    boolean isPersonExist(Person personToAdd);
 }

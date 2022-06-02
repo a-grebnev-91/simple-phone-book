@@ -50,16 +50,27 @@ public class PhonesHandler implements HttpHandler {
     }
 
     private void handlePostRequest() throws IOException {
-        //TODO not implemented
-        //if add send phones/added if not send phones/notAdded
-
-        FileInputStream is = new FileInputStream(PropertiesLoader.getProperty("/phones/added"));
-        byte[] html = is.readAllBytes();
-        is.close();
+        String body = new String(exchange.getRequestBody().readAllBytes(), PropertiesLoader.getDefaultCharset());
+        Person personToAdd = gson.fromJson(body, Person.class);
+        FileInputStream fis;
+        if (addPerson(personToAdd)) {
+            fis = new FileInputStream(PropertiesLoader.getProperty("/phones/added"));
+        } else {
+            fis = new FileInputStream(PropertiesLoader.getProperty("/phones/not-added"));
+        }
+        byte[] html = fis.readAllBytes();
+        fis.close();
         exchange.sendResponseHeaders(200, html.length);
-        try (
-                OutputStream os = exchange.getResponseBody()) {
+        try (OutputStream os = exchange.getResponseBody()) {
             os.write(html);
+        }
+    }
+
+    private boolean addPerson(Person personToAdd) {
+        if (manager.isPersonExist(personToAdd)) {
+            return false;
+        } else {
+            return manager.createPerson(personToAdd);
         }
     }
 

@@ -3,15 +3,15 @@ const phonesURL = '/phones'
 let inputs;
 let entriesFromServer
 let table;
-let tableHeader = '<tr><th>ФИО</th><th>Организация</th><th>Телефон</th></tr>';
 
-document.addEventListener("DOMContentLoaded", function(event) {
+loadData();
+
+document.addEventListener("DOMContentLoaded", function (event) {
     inputs = document.querySelectorAll('.name');
-    inputs.forEach(function(input, i, inputs){
-        input.addEventListener('keyup', getNames)
+    inputs.forEach(function (input, i, inputs) {
+        input.addEventListener('keyup', fillTable)
     });
     table = document.querySelector('table');
-    loadData();
 });
 
 function convertStringToNumber(number) {
@@ -34,7 +34,7 @@ function entryIsValid(entry) {
         alert("Нельзя создать контакт без номера телефона");
         return false;
     }
-    if (!numberIsValid(number)) {
+    if (!numberIsValid(entry.number)) {
         alert("Номер содержит недопустимые символы");
         return;
     }
@@ -59,22 +59,14 @@ function getFullNameByUserInput() {
     return userInputFullName.trim();
 }
 
-function getNames(event) {
-    let htmlForTable = tableHeader;
+function fillTable() {
     let userInputFullName = getFullNameByUserInput().toLowerCase();
     if (userInputFullName === '') {
         table.innerHTML = '';
         return;
+    } else {
+        table.innerHTML = getTableContent(entriesFromServer, userInputFullName);
     }
-    for (let id in entriesFromServer) {
-        let name = entriesFromServer[id]['name'];
-        let organization = entriesFromServer[id]['organization'];
-        let number = entriesFromServer[id]['numbers'];
-        if (name.toLowerCase().includes(userInputFullName, 0)) {
-            htmlForTable += '<tr><td>' + name + '</td><td>' + organization + '</td><td>' + number + '</td></tr>';
-        }
-    }
-    table.innerHTML = htmlForTable;
 }
 
 function getNumber() {

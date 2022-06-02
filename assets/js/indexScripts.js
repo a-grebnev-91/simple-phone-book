@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 function tableUpdate() {
-    table.innerHTML = getTableContent(values, input);
+    table.innerHTML = getTableContent(values, input.value);
 }
 
 function loadData() {

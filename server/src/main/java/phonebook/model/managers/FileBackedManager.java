@@ -65,6 +65,12 @@ public class FileBackedManager implements PhoneBookManager {
         return phoneBook.getPersonBySurname(secondName);
     }
 
+    @Override
+    public boolean isPersonExist(Person personToAdd) {
+        //todo this is bullshit
+        return phoneBook.isPresent(personToAdd);
+    }
+
     private void save() {
         JsonFileSaver.save(this);
     }
