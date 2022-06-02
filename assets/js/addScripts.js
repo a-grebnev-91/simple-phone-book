@@ -14,17 +14,31 @@ document.addEventListener("DOMContentLoaded", function(event) {
     loadData();
 });
 
-//этот метод говнокод (сайд эфект)
 function convertStringToNumber(number) {
-    number = number.replace("+", "");
-    number = number.replaceAll("(", "");
-    number = number.replaceAll(")", "");
-    number = number.replaceAll("-", "");
-    if (number.length === 11 && number[0] == 7) {
-        number = number.replace("7", "");
+    let result = number.replace("+", "");
+    result = result.replaceAll("(", "");
+    result = result.replaceAll(")", "");
+    result = result.replaceAll("-", "");
+    if (result.length === 11 && result[0] == 7) {
+        result = result.replace("7", "");
     }
-    console.log(number);
-    return /^\d+$/.test(number);
+    return result;
+}
+
+function entryIsValid(entry) {
+    if (!entry.name) {
+        alert("Нельзя создать безымянный контакт");
+        return false;
+    }
+    if (!entry.number) {
+        alert("Нельзя создать контакт без номера телефона");
+        return false;
+    }
+    if (!numberIsValid(number)) {
+        alert("Номер содержит недопустимые символы");
+        return;
+    }
+    return true;
 }
 
 function getFullNameByUserInput() {
@@ -63,6 +77,11 @@ function getNames(event) {
     table.innerHTML = htmlForTable;
 }
 
+function getNumber() {
+    let number = document.querySelector(".number").value.trim();
+    return convertStringToNumber(number);
+}
+
 function loadData() {
     let xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -75,29 +94,21 @@ function loadData() {
     xhr.send();
 }
 
+function numberIsValid(number) {
+    return /^\d+$/.test(number)
+}
+
 function tryToAddContact() {
-    let name = getFullNameByUserInput();
-    let organization = document.querySelector(".organization").value.trim();
-    let number = document.querySelector(".number").value.trim();
-    if (!name) {
-        alert("Нельзя создать безымянный контакт");
-        return;
-    }
-    if (!number) {
-        alert("Нельзя создать контакт без номера телефона");
-        return;
-    }
-    if (!convertStringToNumber(number)) {
-        alert("Номер содержит недопустимые символы");
-        return;
-    }
-    if (!organization) {
-        organization = "-";
-    }
     let entry = {
-        name,
-        organization,
-        number
+        name: getFullNameByUserInput(),
+        organization: document.querySelector(".organization").value.trim(),
+        number: getNumber()
+    }
+    if (!entryIsValid(entry)) {
+        return;
+    }
+    if (!entry.organization) {
+        entry.organization = "-";
     }
     let pageContent = document.querySelector('html');
     let xhr = new XMLHttpRequest();

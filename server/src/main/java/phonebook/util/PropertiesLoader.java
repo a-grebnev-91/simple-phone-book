@@ -37,10 +37,6 @@ public class PropertiesLoader {
         return properties.getProperty("jsonFile");
     }
 
-    public static String getRequestingPageHeader() {
-        return properties.getProperty("requestingPageHeader");
-    }
-
     public static String getRoot() {
         return properties.getProperty("root");
     }
