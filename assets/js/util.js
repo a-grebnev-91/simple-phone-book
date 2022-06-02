@@ -1,3 +1,5 @@
+let tableHeader = '<tr><th>ФИО</th><th>Организация</th><th>Телефон</th></tr>';
+
 function getPrettyNumbers(numbers) {
     let result = [];
     for (number of numbers) {
@@ -12,6 +14,23 @@ function getPrettyNumbers(numbers) {
             number = number.slice(0, 3) + "-" + number.slice(3);
         }
         result.push(number);
-        return result;
     }
+    return result;
+
+}
+
+function getTableContent(entries, userInput) {
+    let htmlForTable = tableHeader;
+    for (let id in entries) {
+        let entry = values[id];
+        let name = entry.name;
+        let organization = entry.organization;
+        let numbers = entry.numbers;
+        numbers = getPrettyNumbers(numbers);
+        numbers = numbers.join("</br>");
+        if (name.toLowerCase().includes(userInput.value.toLowerCase(), 0)) {
+            htmlForTable += '<tr><td>' + name + '</td><td>' + organization + '</td><td>' + numbers + '</td></tr>';
+        }
+    }
+    return htmlForTable;
 }

@@ -48,7 +48,6 @@ function getFullNameByUserInput() {
 function getNames(event) {
     let htmlForTable = tableHeader;
     let userInputFullName = getFullNameByUserInput().toLowerCase();
-    console.log(userInputFullName);
     if (userInputFullName === '') {
         table.innerHTML = '';
         return;

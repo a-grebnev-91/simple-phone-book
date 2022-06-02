@@ -39,6 +39,7 @@ public class FileBackedManager implements PhoneBookManager {
         return id > 0;
     }
 
+    //todo add sort
     @Override
     public Collection<Person> getAll() {
         return phoneBook.getAll();
