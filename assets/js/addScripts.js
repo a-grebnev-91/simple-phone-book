@@ -30,11 +30,11 @@ function entryIsValid(entry) {
         alert("Нельзя создать безымянный контакт");
         return false;
     }
-    if (!entry.number) {
+    if (!entry.numbers) {
         alert("Нельзя создать контакт без номера телефона");
         return false;
     }
-    if (!numberIsValid(entry.number)) {
+    if (!numberIsValid(entry.numbers)) {
         alert("Номер содержит недопустимые символы");
         return;
     }
@@ -94,7 +94,7 @@ function tryToAddContact() {
     let entry = {
         name: getFullNameByUserInput(),
         organization: document.querySelector(".organization").value.trim(),
-        number: getNumber()
+        numbers: getNumber()
     }
     if (!entryIsValid(entry)) {
         return;

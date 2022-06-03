@@ -6,9 +6,11 @@ import com.google.gson.stream.JsonWriter;
 import phonebook.model.data.Person;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PersonTypeAdapter extends TypeAdapter<Person> {
 
@@ -22,17 +24,8 @@ public class PersonTypeAdapter extends TypeAdapter<Person> {
         jsonWriter.name("id").value(person.getId());
         jsonWriter.name("name").value(person.getName());
         jsonWriter.name("organization").value(person.getOrganization());
-        jsonWriter.name("numbers");
-        writeLongsArray(jsonWriter, person.getNumbers());
+        jsonWriter.name("numbers").value(convertArrayToString(person.getNumbers()));
         jsonWriter.endObject();
-    }
-
-    private void writeLongsArray(JsonWriter jsonWriter, Set<Long> numbers) throws IOException {
-        jsonWriter.beginArray();
-        for (Long number : numbers) {
-            jsonWriter.value(number);
-        }
-        jsonWriter.endArray();
     }
 
     @Override
@@ -40,8 +33,7 @@ public class PersonTypeAdapter extends TypeAdapter<Person> {
         int id = 0;
         String name = null;
         String organization = null;
-        Set<Long> numbers = null;
-
+        Long[] numbers = null;
         jsonReader.beginObject();
         while (jsonReader.hasNext()) {
             String jsonName = jsonReader.nextName();
@@ -56,7 +48,7 @@ public class PersonTypeAdapter extends TypeAdapter<Person> {
                     organization = jsonReader.nextString();
                     break;
                 case "numbers":
-                    numbers = readLongsArray(jsonReader);
+                    numbers = convertStringToArray(jsonReader.nextString());
                     break;
                 default:
                     jsonReader.skipValue();
@@ -65,9 +57,22 @@ public class PersonTypeAdapter extends TypeAdapter<Person> {
         }
         jsonReader.endObject();
 
-        return new Person(id, name, organization, numbers.toArray(new Long[0]));
+        return new Person(id, name, organization, numbers);
     }
 
+    private String convertArrayToString(Set<Long> numbers) {
+        return numbers.stream().map(String::valueOf).collect(Collectors.joining(","));
+    }
+
+    private Long[] convertStringToArray(String numbers) {
+        String[] nums = numbers.split(",");
+        return Arrays.stream(nums).map(String::trim).map(Long::parseLong).toArray(Long[]::new);
+    }
+
+
+
+
+    //TODO del all below
     private Set<Long> readLongsArray(JsonReader jsonReader) throws IOException {
         Set<Long> numbers = new HashSet<>();
         jsonReader.beginArray();
@@ -76,6 +81,14 @@ public class PersonTypeAdapter extends TypeAdapter<Person> {
         }
         jsonReader.endArray();
         return numbers;
+    }
+
+    private void writeLongsArray(JsonWriter jsonWriter, Set<Long> numbers) throws IOException {
+        jsonWriter.beginArray();
+        for (Long number : numbers) {
+            jsonWriter.value(number);
+        }
+        jsonWriter.endArray();
     }
 }
 

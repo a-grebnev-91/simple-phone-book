@@ -53,13 +53,11 @@ public class PhoneBook {
         throw new RuntimeException("not implement");
     }
 
-
     public boolean isPresent(Person person) {
-        return people.containsValue(person);
-    }
-
-    public boolean isPresent(int id) {
-        return people.containsKey(id);
+        for (Long number : person.getNumbers())
+            if (numbers.containsKey(number))
+                return true;
+        return false;
     }
 
     public boolean removePerson(int id) {

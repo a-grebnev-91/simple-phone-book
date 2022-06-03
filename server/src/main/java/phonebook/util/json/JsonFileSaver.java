@@ -22,7 +22,6 @@ public class JsonFileSaver {
 
     public static void save(PhoneBookManager manager) {
         String json = gson.toJson(manager.getAll());
-
         try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(json.getBytes(charset));
         } catch (FileNotFoundException e) {

@@ -12,6 +12,7 @@ import phonebook.util.json.PersonTypeAdapter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 public class PhonesHandler implements HttpHandler {
 
@@ -51,6 +52,7 @@ public class PhonesHandler implements HttpHandler {
 
     private void handlePostRequest() throws IOException {
         String body = new String(exchange.getRequestBody().readAllBytes(), PropertiesLoader.getDefaultCharset());
+        body = body.trim();
         Person personToAdd = gson.fromJson(body, Person.class);
         FileInputStream fis;
         if (addPerson(personToAdd)) {
