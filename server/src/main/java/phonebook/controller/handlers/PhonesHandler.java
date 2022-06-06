@@ -12,7 +12,6 @@ import phonebook.util.json.PersonTypeAdapter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
 
 public class PhonesHandler implements HttpHandler {
 
@@ -36,9 +35,18 @@ public class PhonesHandler implements HttpHandler {
             case "POST":
                 handlePostRequest();
                 break;
+            case "PUT":
+                handlePutRequest();
+                break;
             default:
                 sendMethodNotAllowed();
         }
+    }
+
+    private Person getPersonFromRequestBody() throws IOException {
+        String body = new String(exchange.getRequestBody().readAllBytes(), PropertiesLoader.getDefaultCharset());
+        body = body.trim();
+        return gson.fromJson(body, Person.class);
     }
 
     private void handleGetRequest() throws IOException {
@@ -50,29 +58,42 @@ public class PhonesHandler implements HttpHandler {
         }
     }
 
+    //todo fix createPerson method - it's should check if person is exist
     private void handlePostRequest() throws IOException {
-        String body = new String(exchange.getRequestBody().readAllBytes(), PropertiesLoader.getDefaultCharset());
-        body = body.trim();
-        Person personToAdd = gson.fromJson(body, Person.class);
+        Person personToAdd = getPersonFromRequestBody();
         FileInputStream fis;
-        if (addPerson(personToAdd)) {
+        int statusCode;
+        if (manager.createPerson(personToAdd)) {
             fis = new FileInputStream(PropertiesLoader.getProperty("/phones/added"));
+            statusCode = 201;
         } else {
             fis = new FileInputStream(PropertiesLoader.getProperty("/phones/not-added"));
+            statusCode = 422;
         }
         byte[] html = fis.readAllBytes();
         fis.close();
-        exchange.sendResponseHeaders(200, html.length);
+        exchange.sendResponseHeaders(statusCode, html.length);
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(html);
         }
     }
 
-    private boolean addPerson(Person personToAdd) {
-        if (manager.isPersonExist(personToAdd)) {
-            return false;
+    private void handlePutRequest() throws IOException {
+        Person personToUpdate = getPersonFromRequestBody();
+        FileInputStream fis;
+        int statusCode;
+        if (manager.updatePerson(personToUpdate)) {
+            fis = new FileInputStream(PropertiesLoader.getProperty("/phones/updated"));
+            statusCode = 200;
         } else {
-            return manager.createPerson(personToAdd);
+            fis = new FileInputStream(PropertiesLoader.getProperty("/phones/not-updated"));
+            statusCode = 422;
+        }
+        byte[] html = fis.readAllBytes();
+        fis.close();
+        exchange.sendResponseHeaders(statusCode, html.length);
+        try (OutputStream os = exchange.getResponseBody()) {
+            os.write(html);
         }
     }
 

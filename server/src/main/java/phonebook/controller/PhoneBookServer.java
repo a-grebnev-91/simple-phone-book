@@ -14,6 +14,7 @@ import java.net.InetSocketAddress;
 public class PhoneBookServer {
     private final HttpServer server;
     private final int port;
+    //todo зависимость
     private PhoneBookManager manager;
 
     public PhoneBookServer() throws IOException {

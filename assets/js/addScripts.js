@@ -107,7 +107,7 @@ function tryToAddContact() {
     xhr.open('POST', phonesURL);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
+        if (xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 201 || xhr.status === 422)) {
             pageContent.innerHTML = xhr.response;
         }
     }

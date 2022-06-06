@@ -3,10 +3,9 @@ package phonebook.util.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import phonebook.model.data.Person;
-import phonebook.model.managers.FileBackedManager;
+import phonebook.model.managers.CsvFileBackedManager;
 import phonebook.util.PropertiesLoader;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class JsonFileLoader {
         gson = new GsonBuilder().registerTypeAdapter(Person.class, new PersonTypeAdapter()).create();
     }
 
-    public static FileBackedManager load() {
+    public static CsvFileBackedManager load() {
         String json = null;
         try(FileInputStream fis = new FileInputStream(file)) {
             json = new String(fis.readAllBytes(), charset);
@@ -33,7 +32,7 @@ public class JsonFileLoader {
             throw new FileLoadException("Cannot load file", e);
         }
 
-        return new FileBackedManager(gson.fromJson(json, Person[].class));
+        return new CsvFileBackedManager(gson.fromJson(json, Person[].class));
     }
 
     static class FileLoadException extends RuntimeException {

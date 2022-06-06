@@ -1,7 +1,7 @@
 package phonebook;
 
 import phonebook.model.data.Person;
-import phonebook.model.managers.FileBackedManager;
+import phonebook.model.managers.CsvFileBackedManager;
 import phonebook.model.managers.PhoneBookManager;
 import phonebook.controller.PhoneBookServer;
 
@@ -15,7 +15,7 @@ public class PhoneBookApplication {
     }
 
     private static void makeSomePeopleToCSV() {
-        PhoneBookManager manager = new FileBackedManager();
+        PhoneBookManager manager = new CsvFileBackedManager();
         manager.createPerson(new Person("Петров Петр Петрович", "ООО Рога и копыта", 9219212773L));
         manager.createPerson(new Person("Иванов Иван Иванович", "Организация", 9319224312L));
         manager.createPerson(new Person("Рябов Владимир Константинович", "Управление по управлению всеми управлениями", 9128321563L));
